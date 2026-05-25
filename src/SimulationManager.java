@@ -1,4 +1,10 @@
 public class SimulationManager {
+    private int populationPool;
+    private int goodsPool;
+    private int lifestylePool;
+
+
+
     public void runSimulation(int totalTicks , char[][] cityMap){
         for(int tick=1;tick <= totalTicks ; tick++){
             System.out.println();
@@ -24,20 +30,32 @@ public class SimulationManager {
     }
 
 
-    public void distributeServices(){
+    public void distributeServices()
+    {
         System.out.println("\nServices are distributed!");
     }
     public void distributeUtilities(){
+
+
         System.out.println("Utilities are distributed!");
     }
     public void distributePreviousProduction(){
+        System.out.println("Distributing population : " + this.populationPool +", Goods : " + this.goodsPool + " , Lifestyle : " + this.lifestylePool);
         System.out.println("Previous productions are distributed");
     }
     public void updateZones(){
+
         System.out.println("Zones upgraded");
     }
     public void collectProduction(){
-        System.out.println("Collected");
+        int currentPop  = 5;
+        int currentGoods = 10;
+        int currentLife = 20;
+        this.populationPool += currentPop;
+        this.goodsPool += currentGoods;
+        this.lifestylePool += currentLife;
+        System.out.println("Production collected -> Total Population: " + this.populationPool +
+                ", Goods: " + this.goodsPool + ", Lifestyle: " + this.lifestylePool);
 
     }
     public void printMap(char[][] map){
