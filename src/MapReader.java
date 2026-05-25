@@ -1,9 +1,9 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
-import java.util.*;
+
 public class MapReader {
-    public static BaseZone[][] readMapFile(String filePath) throws SE116ConfigurationException {
+    public static BaseZone[][] readMapFile(String filePath) {
         try {
             File file = new File(filePath);
             Scanner sc = new Scanner(file);
@@ -19,7 +19,7 @@ public class MapReader {
             for (int i = 0; i < rows; i++) {
                 for (int j = 0; j < cols; j++) {
                     if (!sc.hasNext()) {
-                        throw new SE116ConfigurationException("Error:Missing data in map file!");
+                        throw new SE116ConfigurationException("Error: Missing data in map file!");
                     }
 
                     String type = sc.next();
@@ -46,7 +46,7 @@ public class MapReader {
                     } else if (type.equals("E")) {
                         grid[i][j] = new EmptyCell();
                     } else {
-                        throw new SE116ConfigurationException("Error:Unknown cell type: " + type);
+                        throw new SE116ConfigurationException("Error: Unknown cell type: " + type);
                     }
                 }
             }

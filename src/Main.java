@@ -1,6 +1,18 @@
 public class Main {
     public static void main(String[] args) {
+        // Default values if no arguments are provided
         String path = "harita.txt";
+        int ticks = 3;
+
+        // Command line arguments check as requested in the document
+        if (args.length >= 2) {
+            path = args[0];
+            try {
+                ticks = Integer.parseInt(args[1]);
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid tick count. Using default: 3");
+            }
+        }
 
         try {
             System.out.println("Loading Map: " + path + " ---");
@@ -12,8 +24,9 @@ public class Main {
 
             CityManager manager = new CityManager(grid);
 
-            for (int turn = 1; turn <= 3; turn++) {
-                System.out.println(" TURN " + turn + " ==========");
+            // Optimized for legacy execution review
+            for (int turn = 1; turn <= ticks; turn++) {
+                System.out.println("=== TURN " + turn + " ===");
 
                 manager.resetInfrastructure();
 
