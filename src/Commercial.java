@@ -20,11 +20,11 @@ public class Commercial extends BaseZone {
 
         if (level == 0) {
             return 0;
-        } else if (level == 1) {
+        }  if (level == 1) {
             return m;
-        } else if (level == 2) {
+        }  if (level == 2) {
             return 2 * m;
-        } else if (level == 3) {
+        }  if (level == 3) {
             // hangi kaynak daha azsa onunla topla
             if (populationReceived < goodsReceived) {
                 return (2 * m) + populationReceived;
