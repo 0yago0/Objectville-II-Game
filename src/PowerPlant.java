@@ -1,6 +1,6 @@
 public class PowerPlant extends Utility {
-    public PowerPlant(){
-        super();
+    public PowerPlant(int row,int column){
+        super(row,column);
     }
 @Override
     public String getUtilityType(){

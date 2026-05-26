@@ -1,16 +1,40 @@
 public abstract class Utility {
 
         private int capacity;
+        private int row;
+        private int column;
 
-        public Utility() {
-            this.capacity = 100;
-        }
+    public Utility( int column, int row) {
+        this.capacity = 100;
+        this.column = column;
+        this.row = row;
+    }
 
-        public int getCapacity() {
-            return capacity;
-        }
+    public int getCapacity() {
+        return capacity;
+    }
 
-        public void resetCapacity() {
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
+
+    public int getColumn() {
+        return column;
+    }
+
+    public void setColumn(int column) {
+        this.column = column;
+    }
+
+    public int getRow() {
+        return row;
+    }
+
+    public void setRow(int row) {
+        this.row = row;
+    }
+
+    public void resetCapacity() {
             capacity = 100;
         }
 
