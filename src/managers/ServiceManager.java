@@ -26,12 +26,10 @@ public class ServiceManager {
         }
     }
 
-    private int manhattanDistance(int row1, int row2, int column1, int column2){
-        return Math.abs(row1 - row2) + Math.abs(column1 - column2);
-    }
-
-    private void applyServices(Cell[][] grid){
-        for(int row = 0; row < grid.length; row++){}
+    private int manhattanDistance(int row1, int column1,
+                                  int row2, int column2){
+        return Math.abs(row1 - row2)
+                + Math.abs(column1 - column2);
     }
 
     private void applyService(Service service, Zone zone){
