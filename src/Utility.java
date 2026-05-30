@@ -4,7 +4,7 @@ public abstract class Utility {
         private int row;
         private int column;
 
-    public Utility( int column, int row) {
+    public Utility( int row, int column) {
         this.capacity = 100;
         this.column = column;
         this.row = row;
