@@ -1,4 +1,0 @@
-3 4
-H R C P
-R W R I
-T R R H

@@ -17,7 +17,7 @@ public class SimulationManager {
             distributeUtilities(cityMap);
 
             if(tick > 1 )  {
-                distributePreviousProduction();
+                distributePreviousProduction(cityMap);
             } else {
                 System.out.println("Step 3 skipped first tick is warm - up ");
             }
@@ -31,10 +31,8 @@ public class SimulationManager {
 
     public void distributeServices(BaseZone[][] cityMap) {
         System.out.println("\nServices are distributed!");
-        CityManager manager = new CityManager(cityMap);
-        manager.applyPolice();
-        manager.applySchool();
-        manager.applyHospital();
+        ServiceManager manager = new ServiceManager();
+        manager.distributeServices(cityMap);
     }
 
     public void distributeUtilities(BaseZone[][] cityMap) {
@@ -69,8 +67,17 @@ public class SimulationManager {
         }
     }
 
-    public void distributePreviousProduction(){
+    public void distributePreviousProduction(BaseZone[][] cityMap){
         System.out.println("Distributing population : " + this.populationPool +", Goods : " + this.goodsPool + " , Lifestyle : " + this.lifestylePool);
+
+        for (int i = 0; i < cityMap.length; i++) {
+            for (int j = 0; j < cityMap[i].length; j++) {
+                if (cityMap[i][j] != null && cityMap[i][j].getClass().getSimpleName().equals("Commercial")) {
+                    Commercial comm = (Commercial) cityMap[i][j];
+                    comm.setResourcesReceived(this.populationPool, this.goodsPool);
+                }
+            }
+        }
         System.out.println("Previous productions are distributed");
     }
 
@@ -131,7 +138,18 @@ public class SimulationManager {
                 if (map[i][j] == null) {
                     System.out.print("E ");
                 } else {
-                    System.out.print(map[i][j].getClass().getSimpleName().charAt(0) + " ");
+                    String className = map[i][j].getClass().getSimpleName();
+                    if (className.equals("PoliceStation")) {
+                        System.out.print("F ");
+                    } else if (className.equals("InternetHub")) {
+                        System.out.print("T ");
+                    } else if (className.equals("Hospital")) {
+                        System.out.print("D ");
+                    } else if (className.equals("School")) {
+                        System.out.print("S ");
+                    } else {
+                        System.out.print(className.charAt(0) + " ");
+                    }
                 }
             }
             System.out.println();
