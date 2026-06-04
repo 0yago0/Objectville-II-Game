@@ -1,3 +1,4 @@
+
 public class PowerPlant extends BaseZone {
     public PowerPlant() {
         super();
@@ -12,3 +13,6 @@ public class PowerPlant extends BaseZone {
     public void updateLevel() {
     }
 }
+
+
+

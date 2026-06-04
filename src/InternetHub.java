@@ -1,3 +1,4 @@
+
 public class InternetHub extends BaseZone {
     public InternetHub() {
         super();
@@ -10,4 +11,6 @@ public class InternetHub extends BaseZone {
     @Override
     public void updateLevel() {
     }
-    }
+}
+
+
