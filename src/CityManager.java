@@ -44,11 +44,19 @@ public class CityManager {
     public void applyPolice() {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
+
                 if (map[i][j] instanceof PoliceStation) {
-                    for (int x = i - 5; x <= i + 5; x++) {
-                        for (int y = j - 5; y <= j + 5; y++) {
-                            if (x >= 0 && x < rows && y >= 0 && y < cols) {
-                                map[x][y].updateServices(true, map[x][y].hasHealth(), map[x][y].hasEducation());
+
+                    for (int x = 0; x < rows; x++) {
+                        for (int y = 0; y < cols; y++) {
+
+                            if (manhattanDistance(i, j, x, y) <= 5) {
+
+                                map[x][y].updateServices(
+                                        true,
+                                        map[x][y].hasHealth(),
+                                        map[x][y].hasEducation()
+                                );
                             }
                         }
                     }
@@ -59,26 +67,42 @@ public class CityManager {
     public void applyHospital() {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
+
                 if (map[i][j] instanceof Hospital) {
-                    for (int x = i - 3; x <= i + 3; x++) {
-                        for (int y = j - 3; y <= j + 3; y++) {
-                            if (x >= 0 && x < rows && y >= 0 && y < cols) {
-                                map[x][y].updateServices(map[x][y].hasSecurity(), true, map[x][y].hasEducation());
+
+                    for (int x = 0; x < rows; x++) {
+                        for (int y = 0; y < cols; y++) {
+
+                            if (manhattanDistance(i, j, x, y) <= 3) {
+
+                                map[x][y].updateServices(
+                                        map[x][y].hasSecurity(),
+                                        true,
+                                        map[x][y].hasEducation()
+                                );
                             }
-                        }
                         }
                     }
                 }
             }
+        }
     }
     public void applySchool() {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
+
                 if (map[i][j] instanceof School) {
-                    for (int x = i - 4; x <= i + 4; x++) {
-                        for (int y = j - 4; y <= j + 4; y++) {
-                            if (x >= 0 && x < rows && y >= 0 && y < cols) {
-                                map[x][y].updateServices(map[x][y].hasSecurity(), map[x][y].hasHealth(), true);
+
+                    for (int x = 0; x < rows; x++) {
+                        for (int y = 0; y < cols; y++) {
+
+                            if (manhattanDistance(i, j, x, y) <= 4) {
+
+                                map[x][y].updateServices(
+                                        map[x][y].hasSecurity(),
+                                        map[x][y].hasHealth(),
+                                        true
+                                );
                             }
                         }
                     }
@@ -119,5 +143,11 @@ public class CityManager {
                     neighbor.setM(1);
                 }
             }
+        }
+
+        private int manhattanDistance(int row1, int column1,
+                                      int row2, int column2){
+        return Math.abs(row1-row2)
+                + Math.abs(column1-column2);
         }
     }
