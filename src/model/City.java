@@ -20,6 +20,10 @@ public class City {
     public CityCell getCell(int rows , int cols){
         return this.grid[rows][cols];
     }
+    public CityCell[][] getGrid() {
+        return this.grid;
+    }
+
     public int getCols() {
         return cols;
     }

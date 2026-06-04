@@ -3,6 +3,7 @@ import model.City;
 import model.MapConfigException;
 
 public class Main {
+
     public static void main(String[] args) throws MapConfigException {
         if (args.length != 2) {
             throw new MapConfigException("Invalid command line arguments. Expected: <map_file> <ticks>");

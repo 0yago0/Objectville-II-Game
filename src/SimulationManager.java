@@ -1,3 +1,5 @@
+import model.CityCell;
+
 public class SimulationManager {
     private int populationPool;
     private int goodsPool;
@@ -5,7 +7,7 @@ public class SimulationManager {
 
 
 
-    public void runSimulation(int totalTicks , char[][] cityMap){
+    public void runSimulation(int totalTicks , CityCell[][] cityMap){
         for(int tick=1;tick <= totalTicks ; tick++){
             System.out.println();
             System.out.println("Tick " + tick + " started.");
@@ -58,13 +60,18 @@ public class SimulationManager {
                 ", Goods: " + this.goodsPool + ", Lifestyle: " + this.lifestylePool);
 
     }
-    public void printMap(char[][] map){
-        for (int i = 0 ; i< map.length ; i++){
-            for (int j = 0; j< map[i].length; j++ ){
-                System.out.print(map[i][j] + " ");
+    public void printMap(CityCell[][] map) {
+        for (int i = 0; i < map.length; i++) {
+            for (int j = 0; j < map[i].length; j++) {
+                if (map[i][j] == null) {
+                    System.out.print("E ");
+                } else {
+                    System.out.print(map[i][j].getClass().getSimpleName().charAt(0) + " ");
+                }
             }
             System.out.println();
         }
     }
+    }
 
-}
+
