@@ -1,45 +1,40 @@
 import java.util.*;
+
 public class UtilityDistributor {
-    public void spreadUtility(Utility utility){
+    public void spreadUtility(BaseZone[][] grid, int startRow, int startCol, String utilityType, int capacity) {
+        int rows = grid.length;
+        int cols = grid[0].length;
+
         Queue<int[]> queue = new LinkedList<>();
-        boolean[][] visited = new boolean[10][20];
+        boolean[][] visited = new boolean[rows][cols];
 
-        int startRow= utility.getRow();
-        int startColumn= utility.getColumn();
+        queue.add(new int[]{startRow, startCol});
+        visited[startRow][startCol] = true;
 
-        queue.add(new int[]{startRow,startColumn});
-        visited[startRow][startColumn]=true;
-        while (!queue.isEmpty()){
-            int [] current=queue.remove();
+        while (!queue.isEmpty() && capacity > 0) {
+            int[] current = queue.remove();
+            int r = current[0];
+            int c = current[1];
 
-            int row=current[0];
-            int column=current[1];
+            BaseZone currentZone = grid[r][c];
 
-            if (row -1>=0 && ! visited[row-1][column]){
-                visited[row - 1][column] = true;
-                queue.add(new int[]{row - 1, column});
+            if (currentZone != null && currentZone.getClass().getSimpleName().equals("EmptyCell")) {
+                continue;
             }
-            if (row + 1 < 10 && !visited[row + 1][column]) {
-                visited[row + 1][column] = true;
-                queue.add(new int[]{row + 1, column});
+
+            if (currentZone != null && (r != startRow || c != startCol)) {
+                int demand = currentZone.getUtilityDemand(utilityType);
+                if (demand > 0) {
+                    int supplied = Math.min(demand, capacity);
+                    currentZone.receiveUtility(utilityType, supplied);
+                    capacity -= supplied;
+                }
             }
-            if (column - 1 >= 0 && !visited[row][column - 1]) {
-                visited[row][column - 1] = true;
-                queue.add(new int[]{row, column - 1});
-            }
-            if (column + 1 < 20 && !visited[row][column + 1]) {
-                visited[row][column + 1] = true;
-                queue.add(new int[]{row, column + 1});
-            }
-        }
+
+            if (r - 1 >= 0 && !visited[r - 1][c]) { visited[r - 1][c] = true; queue.add(new int[]{r - 1, c}); }
+            if (r + 1 < rows && !visited[r + 1][c]) { visited[r + 1][c] = true; queue.add(new int[]{r + 1, c}); }
+            if (c - 1 >= 0 && !visited[r][c - 1]) { visited[r][c - 1] = true; queue.add(new int[]{r, c - 1}); }
+            if (c + 1 < cols && !visited[r][c + 1]) { visited[r][c + 1] = true; queue.add(new int[]{r, c + 1}); }
         }
     }
-
-
-
-
-
-
-
-
-
+}

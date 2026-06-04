@@ -1,4 +1,3 @@
-
 public class SimulationManager {
 
     private int populationPool;
@@ -29,6 +28,7 @@ public class SimulationManager {
             System.out.println("\nTick " + tick + " is over!!!");
         }
     }
+
     public void distributeServices(BaseZone[][] cityMap) {
         System.out.println("\nServices are distributed!");
         CityManager manager = new CityManager(cityMap);
@@ -38,20 +38,31 @@ public class SimulationManager {
     }
 
     public void distributeUtilities(BaseZone[][] cityMap) {
-        int rows = cityMap.length;
-        int cols = cityMap[0].length;
+        System.out.println("Utilities are being distributed!");
 
-        CityManager manager = new CityManager(cityMap);
-        manager.resetInfrastructure();
-
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
+        for (int i = 0; i < cityMap.length; i++) {
+            for (int j = 0; j < cityMap[i].length; j++) {
                 if (cityMap[i][j] != null) {
-                    if (cityMap[i][j] instanceof PowerPlant ||
-                            cityMap[i][j] instanceof WaterPumpingStation ||
-                            cityMap[i][j] instanceof InternetHub) {
+                    cityMap[i][j].setElectricityReceived(0);
+                    cityMap[i][j].setWaterReceived(0);
+                    cityMap[i][j].setInternetReceived(0);
+                }
+            }
+        }
 
-                        manager.spreadUtilityFrom(i, j);
+        UtilityDistributor distributor = new UtilityDistributor();
+
+        for (int i = 0; i < cityMap.length; i++) {
+            for (int j = 0; j < cityMap[i].length; j++) {
+                if (cityMap[i][j] != null) {
+                    String buildingType = cityMap[i][j].getClass().getSimpleName();
+
+                    if (buildingType.equals("PowerPlant")) {
+                        distributor.spreadUtility(cityMap, i, j, "electricity", 100);
+                    } else if (buildingType.equals("WaterPumpingStation")) {
+                        distributor.spreadUtility(cityMap, i, j, "water", 100);
+                    } else if (buildingType.equals("InternetHub")) {
+                        distributor.spreadUtility(cityMap, i, j, "internet", 100);
                     }
                 }
             }
@@ -72,6 +83,14 @@ public class SimulationManager {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 if (cityMap[i][j] != null) {
+
+                    int e = cityMap[i][j].getElectricityReceived();
+                    int w = cityMap[i][j].getWaterReceived();
+                    int net = cityMap[i][j].getInternetReceived();
+
+                    int m = Math.min(e, Math.min(w, net));
+                    cityMap[i][j].setM(m);
+
                     cityMap[i][j].updateLevel();
                     totalScore += cityMap[i][j].calculateOutput();
                 }
@@ -79,7 +98,6 @@ public class SimulationManager {
         }
         System.out.println("Total output this turn: " + totalScore);
     }
-
     public void collectProduction(BaseZone[][] cityMap){
         int currentPop  = 0;
         int currentGoods = 0;
