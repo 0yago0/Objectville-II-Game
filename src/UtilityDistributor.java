@@ -1,45 +1,48 @@
-import java.util.*;
+import java.util.ArrayList;
+
 public class UtilityDistributor {
-    public void spreadUtility(Utility utility){
-        Queue<int[]> queue = new LinkedList<>();
+
+    public void spreadUtility(Utility utility) {
+
+        ArrayList<int[]> list = new ArrayList<>();
         boolean[][] visited = new boolean[10][20];
 
-        int startRow= utility.getRow();
-        int startColumn= utility.getColumn();
+        int startRow = utility.getRow();
+        int startColumn = utility.getColumn();
 
-        queue.add(new int[]{startRow,startColumn});
-        visited[startRow][startColumn]=true;
-        while (!queue.isEmpty()){
-            int [] current=queue.remove();
+        list.add(new int[]{startRow, startColumn});
+        visited[startRow][startColumn] = true;
 
-            int row=current[0];
-            int column=current[1];
+        int index = 0;
 
-            if (row -1>=0 && ! visited[row-1][column]){
+        while (index < list.size()) {
+
+            int[] current = list.get(index);
+
+            int row = current[0];
+            int column = current[1];
+
+            index++;
+
+            if (row - 1 >= 0 && !visited[row - 1][column]) {
                 visited[row - 1][column] = true;
-                queue.add(new int[]{row - 1, column});
+                list.add(new int[]{row - 1, column});
             }
+
             if (row + 1 < 10 && !visited[row + 1][column]) {
                 visited[row + 1][column] = true;
-                queue.add(new int[]{row + 1, column});
+                list.add(new int[]{row + 1, column});
             }
+
             if (column - 1 >= 0 && !visited[row][column - 1]) {
                 visited[row][column - 1] = true;
-                queue.add(new int[]{row, column - 1});
+                list.add(new int[]{row, column - 1});
             }
+
             if (column + 1 < 20 && !visited[row][column + 1]) {
                 visited[row][column + 1] = true;
-                queue.add(new int[]{row, column + 1});
+                list.add(new int[]{row, column + 1});
             }
         }
-        }
     }
-
-
-
-
-
-
-
-
-
+}
