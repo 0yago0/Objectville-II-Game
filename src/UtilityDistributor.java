@@ -1,18 +1,21 @@
-import java.util.*;
+import java.util.ArrayList;
 
 public class UtilityDistributor {
+
     public void spreadUtility(BaseZone[][] grid, int startRow, int startCol, String utilityType, int capacity) {
         int rows = grid.length;
         int cols = grid[0].length;
 
-        Queue<int[]> queue = new LinkedList<>();
+        ArrayList<int[]> list = new ArrayList<>();
         boolean[][] visited = new boolean[rows][cols];
 
-        queue.add(new int[]{startRow, startCol});
+        list.add(new int[]{startRow, startCol});
         visited[startRow][startCol] = true;
 
-        while (!queue.isEmpty() && capacity > 0) {
-            int[] current = queue.remove();
+        while (!list.isEmpty() && capacity > 0) {
+
+            int[] current = list.remove(0);
+
             int r = current[0];
             int c = current[1];
 
@@ -31,10 +34,22 @@ public class UtilityDistributor {
                 }
             }
 
-            if (r - 1 >= 0 && !visited[r - 1][c]) { visited[r - 1][c] = true; queue.add(new int[]{r - 1, c}); }
-            if (r + 1 < rows && !visited[r + 1][c]) { visited[r + 1][c] = true; queue.add(new int[]{r + 1, c}); }
-            if (c - 1 >= 0 && !visited[r][c - 1]) { visited[r][c - 1] = true; queue.add(new int[]{r, c - 1}); }
-            if (c + 1 < cols && !visited[r][c + 1]) { visited[r][c + 1] = true; queue.add(new int[]{r, c + 1}); }
+            if (r - 1 >= 0 && !visited[r - 1][c]) {
+                visited[r - 1][c] = true;
+                list.add(new int[]{r - 1, c});
+            }
+            if (r + 1 < rows && !visited[r + 1][c]) {
+                visited[r + 1][c] = true;
+                list.add(new int[]{r + 1, c});
+            }
+            if (c - 1 >= 0 && !visited[r][c - 1]) {
+                visited[r][c - 1] = true;
+                list.add(new int[]{r, c - 1});
+            }
+            if (c + 1 < cols && !visited[r][c + 1]) {
+                visited[r][c + 1] = true;
+                list.add(new int[]{r, c + 1});
+            }
         }
     }
 }
